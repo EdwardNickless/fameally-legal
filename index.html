@@ -32,7 +32,7 @@
                     </div>
                     <div class="nav-links">
                         <a href="#features">Features</a>
-                        <a href="#beta">Beta</a>
+                        <a href="#beta">Early access</a>
                         <a href="privacy-policy.html">Privacy</a>
                     </div>
                 </nav>
@@ -53,7 +53,7 @@
                         </p>
                         <div class="hero-actions">
                             <a class="button button-primary" href="#beta"
-                                >Join beta</a
+                                >Join early access</a
                             >
                             <a
                                 class="button button-secondary"
@@ -177,7 +177,7 @@
                         <span class="section-label">Early access</span>
                         <h2>Join the Fameally beta</h2>
                         <p class="signup-intro">
-                            Enter your email below and we will take you to a
+                            Enter your details below and we will take you to a
                             short sign-up form with most fields already filled
                             in for you.
                         </p>
@@ -236,6 +236,85 @@
                                 aria-live="polite"
                             ></div>
 
+                            <div class="signup-source-block">
+                                <span class="signup-label">
+                                    Where did you hear about Fameally?
+                                </span>
+
+                                <fieldset
+                                    class="source-picker source-picker-inline"
+                                    id="source-picker"
+                                >
+                                    <legend class="sr-only">
+                                        Where did you hear about Fameally?
+                                    </legend>
+
+                                    <label class="source-option">
+                                        <input
+                                            type="radio"
+                                            name="source_choice"
+                                            value="Website"
+                                        />
+                                        <span>Website</span>
+                                    </label>
+
+                                    <label class="source-option">
+                                        <input
+                                            type="radio"
+                                            name="source_choice"
+                                            value="Word of Mouth"
+                                        />
+                                        <span>Word of Mouth</span>
+                                    </label>
+
+                                    <label class="source-option">
+                                        <input
+                                            type="radio"
+                                            name="source_choice"
+                                            value="Reddit"
+                                        />
+                                        <span>Reddit</span>
+                                    </label>
+
+                                    <label class="source-option">
+                                        <input
+                                            type="radio"
+                                            name="source_choice"
+                                            value="Other"
+                                        />
+                                        <span>Other</span>
+                                    </label>
+                                </fieldset>
+
+                                <div
+                                    class="source-other-wrap"
+                                    id="source-other-wrap"
+                                    hidden
+                                >
+                                    <label
+                                        class="signup-label sr-only"
+                                        for="source-other"
+                                    >
+                                        Please specify where you heard about
+                                        Fameally
+                                    </label>
+                                    <input
+                                        id="source-other"
+                                        class="signup-input source-other-input"
+                                        type="text"
+                                        name="source_other"
+                                        placeholder="Please specify"
+                                        autocomplete="off"
+                                    />
+                                </div>
+
+                                <div
+                                    class="platform-status"
+                                    id="source-status"
+                                    aria-live="polite"
+                                ></div>
+                            </div>
+
                             <div class="signup-submit-row">
                                 <button
                                     class="button button-primary signup-submit"
@@ -249,15 +328,15 @@
                                 We will prefill your email, platform and source,
                                 then open the final form for confirmation.
                             </p>
-                        </form>
 
-                        <div class="hero-actions">
-                            <a
-                                class="button button-secondary"
-                                href="account-deletion.html"
-                                >Account deletion</a
-                            >
-                        </div>
+                            <p class="small beta-removal-note">
+                                To remove yourself from the early access list,
+                                email
+                                <a href="mailto:support@fameally.com"
+                                    >support@fameally.com</a
+                                >.
+                            </p>
+                        </form>
                     </div>
                 </div>
             </section>
@@ -279,7 +358,12 @@
                 const form = document.getElementById("beta-prefill-form");
                 const platformStatus =
                     document.getElementById("platform-status");
+                const sourceStatus = document.getElementById("source-status");
                 const emailInput = document.getElementById("beta-email");
+                const sourceOtherWrap =
+                    document.getElementById("source-other-wrap");
+                const sourceOtherInput =
+                    document.getElementById("source-other");
 
                 function detectPlatform() {
                     const ua =
@@ -311,6 +395,31 @@
                         : "Selected platform: " + label + ".";
                 }
 
+                function updateSourceUi() {
+                    const selectedSource = form.querySelector(
+                        'input[name="source_choice"]:checked',
+                    );
+
+                    if (!selectedSource) {
+                        sourceOtherWrap.hidden = true;
+                        sourceOtherInput.value = "";
+                        sourceStatus.textContent =
+                            "Choose where you heard about Fameally.";
+                        return;
+                    }
+
+                    if (selectedSource.value === "Other") {
+                        sourceOtherWrap.hidden = false;
+                        sourceStatus.textContent =
+                            "Please add a short description for Other.";
+                    } else {
+                        sourceOtherWrap.hidden = true;
+                        sourceOtherInput.value = "";
+                        sourceStatus.textContent =
+                            "Selected source: " + selectedSource.value + ".";
+                    }
+                }
+
                 const detected = detectPlatform();
                 if (detected) {
                     const selected = form.querySelector(
@@ -324,11 +433,23 @@
                     setPlatform("", false);
                 }
 
+                const defaultSource = form.querySelector(
+                    'input[name="source_choice"][value="Website"]',
+                );
+                if (defaultSource) defaultSource.checked = true;
+                updateSourceUi();
+
                 form.querySelectorAll('input[name="platform_choice"]').forEach(
                     function (radio) {
                         radio.addEventListener("change", function () {
                             setPlatform(radio.value, false);
                         });
+                    },
+                );
+
+                form.querySelectorAll('input[name="source_choice"]').forEach(
+                    function (radio) {
+                        radio.addEventListener("change", updateSourceUi);
                     },
                 );
 
@@ -343,10 +464,29 @@
                     const selectedPlatformRadio = form.querySelector(
                         'input[name="platform_choice"]:checked',
                     );
-
                     if (!selectedPlatformRadio) {
                         platformStatus.textContent =
                             "Please choose iPhone / iPad or Android before continuing.";
+                        return;
+                    }
+
+                    const selectedSourceRadio = form.querySelector(
+                        'input[name="source_choice"]:checked',
+                    );
+                    if (!selectedSourceRadio) {
+                        sourceStatus.textContent =
+                            "Please choose where you heard about Fameally.";
+                        return;
+                    }
+
+                    const selectedSource = selectedSourceRadio.value;
+                    const otherText = sourceOtherInput.value.trim();
+
+                    if (selectedSource === "Other" && !otherText) {
+                        sourceOtherInput.reportValidity();
+                        sourceOtherInput.focus();
+                        sourceStatus.textContent =
+                            "Please specify where you heard about Fameally.";
                         return;
                     }
 
@@ -361,8 +501,18 @@
                         "entry.823770980": platformLabel,
                         "entry.1661981072": emailInput.value.trim(),
                         "entry.356145364": "",
-                        "entry.1803207863": "Website",
+                        "entry.1803207863":
+                            selectedSource === "Other"
+                                ? "__other_option__"
+                                : selectedSource,
                     });
+
+                    if (selectedSource === "Other") {
+                        params.set(
+                            "entry.1803207863.other_option_response",
+                            otherText,
+                        );
+                    }
 
                     window.location.href =
                         googleFormBase + "&" + params.toString();
