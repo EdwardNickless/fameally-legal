@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en-GB">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex, follow" />
+        <title>Open Fameally</title>
+        <meta
+            name="description"
+            content="Open the Fameally app or continue to the Fameally website."
+        />
+        <meta property="og:title" content="Open Fameally" />
+        <meta
+            property="og:description"
+            content="Return to the Fameally app or continue to the website."
+        />
+        <meta property="og:url" content="https://fameally.com/open" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://fameally.com/open" />
+        <link rel="stylesheet" href="../styles.css" />
+        <style>
+            .open-main {
+                min-height: calc(100vh - 150px);
+                display: grid;
+                align-items: center;
+                padding: 36px 0 64px;
+            }
+
+            .open-card {
+                max-width: 720px;
+                margin: 0 auto;
+                padding: 34px;
+            }
+
+            .open-card h1 {
+                margin: 0 0 14px;
+                font-size: clamp(2rem, 5vw, 3rem);
+                line-height: 1.08;
+            }
+
+            .open-card p {
+                color: var(--muted);
+                margin: 0;
+            }
+
+            .open-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-top: 28px;
+            }
+
+            .open-note {
+                margin-top: 20px;
+                font-size: 0.95rem;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="container">
+                <nav class="topbar" aria-label="Primary">
+                    <a class="brand" href="../" aria-label="Fameally home">
+                        <div class="brand-mark">F</div>
+                        <span>Fameally</span>
+                    </a>
+                    <div class="nav-links">
+                        <a href="../">Website</a>
+                        <a href="../privacy-policy.html">Privacy</a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main class="open-main">
+            <section class="container">
+                <div class="card open-card">
+                    <span class="section-label">Fameally app</span>
+                    <h1>Open Fameally</h1>
+                    <p>
+                        If Fameally is installed, this link should open the app
+                        automatically. You can also use the button below to try
+                        again.
+                    </p>
+                    <div class="open-actions">
+                        <a class="button button-primary" href="fameally://"
+                            >Open app</a
+                        >
+                        <a
+                            class="button button-secondary"
+                            href="https://play.google.com/store/apps/details?id=com.edwardnickless.fameally"
+                            >Get Android app</a
+                        >
+                        <a class="button button-secondary" href="../"
+                            >Continue to website</a
+                        >
+                    </div>
+                    <p class="open-note">
+                        The iOS App Store link will be added once the listing is
+                        live.
+                    </p>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

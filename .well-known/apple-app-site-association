@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "R55TAW874A.com.edwardnickless.fameally",
+        "paths": [
+          "/open",
+          "/open/*"
+        ]
+      }
+    ]
+  }
+}
